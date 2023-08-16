@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('create');
 // });
 
+Route::get('/get', function (){
+    $redis = Redis::incr('p');
+
+    return $redis;
+});
 Route::get('/', [EmployeeController::class, 'create']);
 Route::post('/', [EmployeeController::class, 'store']);

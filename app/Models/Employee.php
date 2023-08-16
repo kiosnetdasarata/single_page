@@ -11,6 +11,8 @@ class Employee extends Model
 
     protected $fillable = [
         'nip_pgwi',
+        'uuid',
+        'slug',
         'branch_company_id',
         'divisi_id',
         'jabatan_id',

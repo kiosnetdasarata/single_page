@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/test', [WhatsappController::class, 'store']);
 Route::post('/employee', [EmployeeController::class, 'store']);
+Route::get('/employee/regis', [EmployeeController::class, 'storeRegis']);

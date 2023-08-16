@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Sales;
+use Ramsey\Uuid\Uuid;
 use App\Models\Village;
 use App\Models\District;
 use App\Models\Division;
@@ -9,10 +13,10 @@ use App\Models\Employee;
 use App\Models\JobTitle;
 use App\Models\Province;
 use App\Models\Regencie;
+use App\Models\Technician;
 use App\Models\StatusLevel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -58,6 +62,80 @@ class EmployeeController extends Controller
         $employee->create($request->all());
 
         return redirect()->back()->with('success', 'Data Berhasil Di Simpan');
+    }
+
+    public function update(Request $request, Employee $employee)
+    {
+
+    }
+
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function storeRegis(Request $request)
+    {
+        $employees = Employee::select('nip_pgwi')->get();
+        // foreach ($employees as $employee){
+
+            // $dd = Technician::whereIn('employees_nip',  $employees)->get();
+            $dd = Technician::leftJoin('employees', 'technicians.employees_nip', '=', 'employees.nip_pgwi')
+                            ->where('technicians.katim', '=', 0)
+                            ->select('employees.nama')
+                            ->get();
+
+            dd($dd);
+        // }
+
+
+        // foreach ($employees as $employee){
+        //     if($employee->jabatan_id == 12 || $employee->jabatan_id == 13 || $employee->jabatan_id == 14){
+        //         if($employee->status_level_id == 4){
+        //             Technician::insert([
+        //                 'employees_nip' => $employee->nip_pgwi,
+        //                 'katim' => 1
+        //             ]);
+        //         }else{
+        //             Technician::insert([
+        //                 'employees_nip' => $employee->nip_pgwi,
+        //                 'katim' => 0
+        //             ]);
+        //         }
+        //     }elseif($employee->jabatan_id == 7){
+        //         Sales::insert([
+        //             'karyawan_nip' => $employee->nip_pgwi,
+        //             'komisi_id' => 1,
+        //             'level_id' => 1
+        //         ]);
+        //     }
+        // }
+
+        // foreach ($employees as $employee){
+
+        //     Employee::where('nip_pgwi', $employee->nip_pgwi)->update([
+        //         // 'slug' => Str::slug($employee->nama, '_'),
+        //         'uuid' => Uuid::uuid4()->getHex()
+        //     ]);
+        // }
+
+        // foreach ($employees as $employee){
+        //     if($employee->status_level_id == 4){
+        //         User::insert([
+        //             'karyawan_nip' => $employee->nip_pgwi,
+        //             'uuid' => Uuid::uuid4()->getHex(),
+        //             'is_leader' => 1,
+        //             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+        //         ]);
+        //     }else{
+        //         User::insert([
+        //             'karyawan_nip' => $employee->nip_pgwi,
+        //             'uuid' => Uuid::uuid4()->getHex(),
+        //             'is_leader' => 0,
+        //             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
+        //         ]);
+        //     }
+        // }
     }
 
     public function getProvince()
